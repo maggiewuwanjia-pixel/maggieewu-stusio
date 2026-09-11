@@ -1,5 +1,6 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
+import {Portal,FeatureShowcase} from './showcase';
 const B='/portfolio/';
 const nav=[['northstar','NorthStar','AI CONTENT COPILOT'],['plateforge','PlateForge','AI FOOD COMPANION'],['architecture','空间与叙事','ARCHITECTURE / 4 WORKS'],['about','关于宛珈','ABOUT & EXPERIENCE'],['nivea','NIVEA','BRAND & GROWTH']];
 const works=[
@@ -10,13 +11,14 @@ const works=[
 ];
 const arch=(n:number)=>B+'arch-'+String(n).padStart(2,'0')+'.jpg';
 const nivea=(n:number)=>B+'nivea-'+String(n).padStart(3,'0')+'.jpg';
-function Motion({id,kind,children}:{id:string,kind:string,children:React.ReactNode}){const ref=useRef<HTMLElement>(null);useEffect(()=>{let frame=0;const update=()=>{if(frame)return;frame=requestAnimationFrame(()=>{frame=0;const el=ref.current;if(!el)return;const r=el.getBoundingClientRect();el.style.setProperty('--p',String(Math.max(0,Math.min(1,-r.top/Math.max(1,r.height-innerHeight)))));});};update();addEventListener('scroll',update,{passive:true});addEventListener('resize',update);return()=>{removeEventListener('scroll',update);removeEventListener('resize',update);cancelAnimationFrame(frame);};},[]);return <section id={id} className={kind} ref={ref}>{children}</section>}
+function Motion({id,kind,children}:{id:string,kind:string,children:React.ReactNode}){const ref=useRef<HTMLElement>(null);useEffect(()=>{let frame=0;const update=()=>{if(frame)return;frame=requestAnimationFrame(()=>{frame=0;const el=ref.current;if(!el)return;const r=el.getBoundingClientRect();el.style.setProperty('--p',String(Math.max(0,Math.min(1,-r.top/Math.max(1,r.height-innerHeight)))));});};update();addEventListener('scroll',update,{passive:true});addEventListener('resize',update);return()=>{removeEventListener('scroll',update);removeEventListener('resize',update);cancelAnimationFrame(frame);};},[]);return <><section id={id} className={kind} ref={ref}>{children}</section>{(id==='northstar'||id==='plateforge')&&<FeatureShowcase product={id}/>}</>}
 export default function Home(){
 const [active,setActive]=useState('home'),[open,setOpen]=useState<{src:string,title:string}|null>(null),[ns,setNs]=useState(0),[pf,setPf]=useState(0);const dialog=useRef<HTMLDialogElement>(null);
 useEffect(()=>{const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)setActive(e.target.id);});},{rootMargin:'-20% 0px -60% 0px'});document.querySelectorAll('main>section[id]').forEach(el=>obs.observe(el));return()=>obs.disconnect();},[]);
 useEffect(()=>{if(open){dialog.current?.showModal();document.body.style.overflow='hidden';}else{dialog.current?.close();document.body.style.overflow='';}return()=>{document.body.style.overflow='';};},[open]);
 const zoom=(src:string,title:string)=>setOpen({src,title});
 return <main>
+<Portal/>
 <header><a className="brand" href="#home"><span>✳</span> WANJIA WU <small>邬宛珈</small></a><span className="header-note">IDEAS, GROWN INTO EXPERIENCES.</span><a href="mailto:wu-wj24@mails.tsinghua.edu.cn">Let’s talk ↗</a></header>
 <nav className={'rail '+(active==='home'?'hidden':'')} aria-label="章节导航">{nav.map(([id,label],i)=><a key={id} href={'#'+id} className={active===id?'active':''}><span>0{i+1}</span><b>{label}</b></a>)}</nav>
 <Motion id="home" kind="hero-scroll"><div className="hero-sticky"><div className="hero-bg"/><span className="hero-kicker">A PERSONAL COLLECTION / 2026</span><div className="hero-title"><span>Welcome to</span><h1>my creative<br/><em>garden.</em></h1><p>我是邬宛珈。<br/>在 AI 产品、空间设计与商业之间，<br/>把想法种成可以被体验的作品。</p></div><img className="hero-island" src={B+'office-island.png'} alt="花草与电脑组成的漂浮办公岛"/><img className="hero-food" src={B+'food-sculpture.png'} alt="绿色食材与餐具的漂浮装置"/><div className="index"><span className="eyebrow">THE INDEX / 目录</span>{nav.map(([id,label,sub],i)=><a key={id} href={'#'+id}><i>0{i+1}</i><div><b>{label}</b><small>{sub}</small></div><span>↗</span></a>)}</div><div className="hero-bottom"><span>PRODUCT · SPACE · STRATEGY</span><a href="#northstar">Scroll to explore ↓</a><span>BEIJING / BARCELONA</span></div></div></Motion>
