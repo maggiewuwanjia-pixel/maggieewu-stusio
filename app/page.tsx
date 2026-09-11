@@ -1,39 +1,25 @@
 'use client';
+import { useCallback, useEffect, useState } from 'react';
+import Scene from './scene';
 
-import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+const navigation=[['cue','Cue · 经营助手','I'],['content','内容创作','II'],['insight','经营洞察','III'],['start','开始体验','IV']];
+const questions=['下条视频拍什么？','为什么互动率低？','下场直播怎么改？'];
+const answers=['拍「开学前 7 天收心计划」。前 3 秒从家长的真实焦虑切入，中段给出可执行的节奏表，结尾邀请观众领取模板。','先看前 3 秒留存和评论触发点。把泛泛的学习方法改成一个具体问题，让观众有理由说出自己的情况。','把「月考后家长怎么做」前置。先回应高频问题，再用案例展开，最后给出一份可带走的行动清单。'];
 
-const chapters = [
-  { no: '01', title: '看见趋势', eyebrow: 'CONTENT INTELLIGENCE', copy: '把视频、直播与账号数据收拢成一张经营地图。今天该看什么，一眼就有答案。', tone: 'mint', stat: '22.4w', label: '正在关注你' },
-  { no: '02', title: '找到下一步', eyebrow: 'NORTHSTAR GUIDANCE', copy: '从信号到建议，不只报数。每一条建议都有目标、理由和可以立刻执行的动作。', tone: 'violet', stat: '03', label: '件优先去做的事' },
-  { no: '03', title: '持续增长', eyebrow: 'CREATOR OPERATING SYSTEM', copy: '选题、脚本、排期和复盘，在一个有节奏的工作流里持续推进。', tone: 'coral', stat: '+287', label: '昨日新增关注' },
-];
-
-export default function Home() {
-  const [chapter, setChapter] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const active = chapters[chapter];
-
-  return <main className="showcase">
-    <nav className="topbar">
-      <a className="brand" href="#top"><span>✦</span> 北极星 <i>NorthStar</i></a>
-      <div className={menuOpen ? 'navlinks open' : 'navlinks'}><a href="#product">产品能力</a><a href="#workflow">工作方式</a><a href="#launch">开始体验</a></div>
-      <a className="nav-cta" href="#launch">进入工作台 <ArrowUpRight size={15} /></a>
-      <button className="menu" onClick={() => setMenuOpen(!menuOpen)} aria-label="打开导航">{menuOpen ? <X /> : <Menu />}</button>
-    </nav>
-    <section className="hero" id="top">
-      <div className="hero-grid" />
-      <div className="hero-copy"><p className="kicker"><span /> 视频号经营 AI</p><h1>让每一次内容<br /><em>都有方向。</em></h1><p className="lede">北极星把内容数据、创作节奏和增长建议，聚合成你的下一步。</p><a className="button light" href="#product">探索 NorthStar <ArrowUpRight size={17} /></a></div>
-      <div className="star-field" aria-hidden="true"><div className="orbit orbit-a" /><div className="orbit orbit-b" /><div className="star-core"><span>✦</span><small>NORTH<br />STAR</small></div><div className="signal s-one"><b>增长信号</b><span>+12.4%</span></div><div className="signal s-two"><b>内容节奏</b><span>已就绪</span></div><div className="signal s-three"><b>本周目标</b><span>75%</span></div></div>
-      <div className="scroll-note">SCROLL TO EXPLORE <ChevronDown size={14} /></div>
-    </section>
-    <section className="intro" id="product"><p className="kicker dark"><span /> FOR PEOPLE WHO MAKE THINGS HAPPEN</p><h2>经营内容，不该只靠感觉。</h2><p>把零散的后台数据转成清晰的方向，让团队知道今天、下周和下一个增长节点分别该做什么。</p></section>
-    <section className={`chapter ${active.tone}`} id="workflow">
-      <div className="chapter-tabs" role="tablist">{chapters.map((item, index) => <button key={item.no} role="tab" aria-selected={chapter === index} onClick={() => setChapter(index)}><span>{item.no}</span>{item.title}</button>)}</div>
-      <div className="chapter-content"><div className="chapter-copy"><p className="kicker"><span /> {active.eyebrow}</p><h2>{active.title}</h2><p>{active.copy}</p><a href="#launch">了解这一能力 <ArrowUpRight size={16} /></a></div><div className="metric-sculpture" key={active.no}><div className="sculpture-glow" /><div className="sphere sphere-one" /><div className="sphere sphere-two" /><div className="sphere sphere-three" /><div className="metric-card"><small>{active.label}</small><strong>{active.stat}</strong><div className="mini-line"><i /><i /><i /><i /><i /><i /></div></div><div className="floating-label label-one">内容 → 信号</div><div className="floating-label label-two">洞察 → 行动</div></div></div>
-    </section>
-    <section className="experience"><div className="experience-head"><p className="kicker dark"><span /> THE WORKBENCH</p><h2>从一条内容，<br />看到一整套经营。</h2></div><div className="console"><aside><div className="console-brand">✦ <b>北极星</b></div>{['经营看板','内容洞察','创作排期','直播复盘','对标账号'].map((x,i)=><div className={i===0?'active':''} key={x}>{x}{i>0&&<small>0{i+4}</small>}</div>)}</aside><div className="console-main"><div className="console-top"><b>经营看板</b><span>数据正在更新</span><button>⌘ 搜索</button></div><div className="recommendations">{['下周该怎么做','下条视频怎么拍','下场直播改什么'].map((x,i)=><article key={x}><span>0{i+1}</span><h3>{x}</h3><p>{i===0?'把“开学季”作为本周主线，优先优化前 3 秒的情绪钩子。':i===1?'从高频问题出发，先给结果，再给可保存的行动模板。':'用真实案例替代泛泛方法，把互动话题放在开场。'}</p></article>)}</div><div className="northbar"><div><small>北极星指标 · 涨粉</small><strong>22.4w</strong><span>+287 / 日</span></div><div className="progress"><p>目标 30w 粉 <b>75%</b></p><i><em /></i></div><button>涨粉</button></div></div></div></section>
-    <section className="cta-section" id="launch"><div className="cta-orbit" /><p className="kicker"><span /> YOUR NEXT MOVE STARTS HERE</p><h2>让内容，<em>走向增长。</em></h2><a className="button light" href="#top">开始使用 NorthStar <ArrowUpRight size={17} /></a><p className="tiny">为视频号内容经营者打造</p></section>
-    <footer><span>© 2026 NORTHSTAR</span><span>CONTENT INTELLIGENCE SYSTEM</span><a href="#top">回到顶部 ↑</a></footer>
-  </main>;
+export default function Home(){
+ const [progress,setProgress]=useState(0);const [ready,setReady]=useState(false);const [question,setQuestion]=useState(0);const [metric,setMetric]=useState(0);
+ const loaded=useCallback(()=>setReady(true),[]);
+ useEffect(()=>{let frame=0;const update=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>setProgress(scrollY/innerHeight));};window.addEventListener('scroll',update,{passive:true});update();return()=>{window.removeEventListener('scroll',update);cancelAnimationFrame(frame);};},[]);
+ const nav=progress>.72;const section=progress<1.55?0:progress<3.65?1:progress<5.5?2:3;
+ const heroFade=Math.max(0,1-progress*1.5);
+ return <main>
+  <Scene onReady={loaded}/><div className="scene-shade"/><div className="construction" aria-hidden="true"><i/><i/><i/><i/><i/><i/></div>
+  <header><a className="wordmark" href="#home">✦ <b>NorthStar</b> <span>北极星 · 2026</span></a><a className="header-link" href="#cue">探索产品 ↓</a><a className="enter" href="http://northstar-copilot.com/" target="_blank" rel="noreferrer">进入工作台 ↗</a></header>
+  <aside className={'index-rail '+(nav?'visible':'')} aria-hidden={!nav}><a className="rail-title" href="#home">The<br/>NorthStar<br/>Edition</a><nav>{navigation.map(([id,label,n],i)=><a href={'#'+id} key={id} className={section===i+1?'current':''}><span>{label}</span><em>{n}</em></a>)}</nav><small>向下滚动，探索每一章<br/>NORTHSTAR / 2026</small></aside>
+  <section className="opening" id="home"><div className="opening-sticky"><div className="cover-panel" style={{opacity:heroFade,transform:`translateY(${-progress*65}px) scale(${1-progress*.08})`,pointerEvents:heroFade<.05?'none':'auto'}}><div><p className="edition">THE CREATOR’S EDITION</p><h1>The<br/>NorthStar<br/>Edition</h1><p className="cn-title">内容经营的新篇章</p></div><div className="cover-bottom"><p>让每一次创作，<br/>都有清晰的下一步。</p><nav>{navigation.map(([id,label,n])=><a href={'#'+id} key={id}>{label}<em>{n}</em></a>)}</nav></div></div><p className="scroll-cue" style={{opacity:heroFade}}>{ready?'向下滚动，开启探索':'正在载入画卷'}<span>↓</span></p></div></section>
+  <section className="story cue-story" id="cue"><div className="chapter-sticky"><div className="chapter-heading"><span>CHAPTER I / YOUR AI PARTNER</span><h2>Cue</h2><p>懂你的内容，<br/>也懂你的下一步。</p></div><article className="product-panel cue-panel"><div className="panel-meta"><span>✦ CUE</span><span>经营助手 / 演示</span></div><h3>不止回答问题。<br/>让下一步，主动发生。</h3><p className="panel-description">结合账号表现、内容知识与对标信息，把零散信号变成具体的行动建议。</p><div className="chat-demo"><div className="chat-q">{questions[question]}</div><div className="chat-answer" key={question}><span>✦</span><p>{answers[question]}</p></div><div className="suggestions">{questions.map((q,i)=><button key={q} className={question===i?'selected':''} onClick={()=>setQuestion(i)}>{q}</button>)}</div></div><a href="http://northstar-copilot.com/" target="_blank" rel="noreferrer" className="text-link">认识你的 Cue ↗</a></article></div></section>
+  <section className="story content-story" id="content"><div className="chapter-sticky"><div className="chapter-heading"><span>CHAPTER II / FROM IDEA TO STORY</span><h2>Create.</h2><p>好内容的诞生，<br/>从一个好问题开始。</p></div><article className="product-panel"><div className="panel-meta"><span>内容创作</span><span>选题 → 脚本 → 发布</span></div><h3>让灵感有来处，<br/>让创作有节奏。</h3><div className="script-pages"><div className="script-sheet"><small>SHORT VIDEO / 01</small><h4>开学前 7 天<br/>收心计划</h4><div><b>00—03s</b><p>你家孩子，准备好迎接新学期了吗？</p></div><div><b>03—35s</b><p>把大目标拆成每天能完成的一小步。</p></div><div><b>35—50s</b><p>收藏这份计划，和孩子一起开始。</p></div></div><div className="script-label">从问题，到可以开拍的脚本。</div></div><div className="feature-line"><span>短视频脚本</span><span>直播脚本</span><span>素材知识库</span></div></article></div></section>
+  <section className="insight" id="insight"><div className="insight-heading"><span>CHAPTER III / SEE THE BIGGER PICTURE</span><h2>看见全局。<br/><i>找准方向。</i></h2><p>内容、观众和增长，在同一张经营地图中彼此连接。</p></div><div className="dashboard"><div className="dashboard-head"><b>✦ 北极星 · 经营看板</b><span>示例账号 / 演示数据</span></div><div className="metric-row"><div><small>{['关注者','昨日播放','互动率'][metric]}</small><strong>{['22.4w','6,011','0.58%'][metric]}</strong><p>{['距 30w 目标，还差 7.6w','近 7 日最高播放 8,230','让每一个互动，都成为下一条内容的线索'][metric]}</p></div><div className="metric-options">{['关注者','播放','互动'].map((m,i)=><button className={metric===i?'on':''} onClick={()=>setMetric(i)} key={m}>{m}</button>)}</div></div><div className="chart" key={metric}><svg viewBox="0 0 720 180" role="img" aria-label="近七日示例趋势"><path d="M0 145L100 105L210 125L310 40L420 75L530 18L620 45L720 8L720 180L0 180Z" fill="#cdd5b6"/><path d="M0 145L100 105L210 125L310 40L420 75L530 18L620 45L720 8" fill="none" stroke="#526043" strokeWidth="3"/></svg><div><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span></div></div><div className="action-grid">{['下周该怎么做','下条视频怎么拍','下场直播改什么'].map((x,i)=><div key={x}><small>0{i+1}</small><h4>{x}</h4><p>{['围绕开学季，建立连续选题。','从观众最关心的问题切入。','用复盘结果，调整下一场节奏。'][i]}</p></div>)}</div></div></section>
+  <section className="closing" id="start"><p>NORTHSTAR / THE CREATOR’S EDITION</p><h2>创作的下一步，<br/><i>从这里开始。</i></h2><a className="closing-button" href="http://northstar-copilot.com/" target="_blank" rel="noreferrer">探索北极星 ↗</a><a className="back" href="#home">↑ 回到画卷起点</a></section><footer>NorthStar · 北极星 <span>视觉概念展示 · 场景素材来自所提供的 Renaissance 参考包</span></footer>
+ </main>;
 }
