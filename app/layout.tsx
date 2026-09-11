@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: '北极星 NorthStar · 内容经营 AI',
-  description: '让每一次内容都有方向。',
+  title: '邬宛珈 Wanjia Wu · Creative Garden',
+  description: '邬宛珈的个人作品：NorthStar、PlateForge、建筑空间与 NIVEA 商业策略。',
+  icons: { icon: '/favicon.svg' },
 };
 
 export default function RootLayout({
