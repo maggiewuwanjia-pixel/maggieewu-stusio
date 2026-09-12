@@ -2,3 +2,20 @@
 @media(max-width:1000px){.feature-stage{height:380px}.feature-card h3{font-size:21px}.feature-card>p{font-size:14px}.prompt-text{font-size:11px}.product-title{left:7vw}.product-title>p{font-size:18px}}
 @media(max-width:700px){.product-title{left:auto;top:auto;padding:20px;margin:-10px -5px 0;transform:none}.north .product-sticky{background:linear-gradient(#edf3e62b,#edf3e63b 50%,#edf3e6 65%),url('/portfolio/forest-office.jpg') center top/auto 700px no-repeat,#edf3e6}.plate .product-sticky{background:linear-gradient(#edf3e62b,#edf3e62b 55%,#edf3e6 70%),url('/portfolio/food-background.jpg') center top/auto 800px no-repeat,#edf3e6}.feature-showcase{padding:55px 24px}.feature-heading h2{font-size:28px;line-height:1.25}.feature-grid{grid-template-columns:1fr;gap:40px}.feature-card:nth-child(2){margin-top:0}.feature-stage{height:390px}.feature-card h3{font-size:23px}.feature-card>p{font-size:15px;max-width:100%}.prompt-text{font-size:12px}.product-copy{background:#edf3e6dd;padding:15px 0 0}.portal-effect{z-index:42}.feature-disclaimer{font-size:10px}.hero-food{opacity:.85}.gallery-heading{background-position:center 32%}}
 @media(prefers-reduced-motion:reduce){.portal-effect{display:none}.scan-line{display:none}.feature-device,.playing .feature-device{transition:none;transform:none}.meal .feature-device,.pantry .feature-device{transform:translateX(-50%)}.playing .prompt-text,.playing .demo-send{animation:none}}
+
+/* Keep the two-column showcase inside the viewport at wide widths. */
+.feature-showcase{overflow:hidden}
+.feature-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:1400px;margin-inline:auto}
+html,body{overflow-x:hidden}
+@media(max-width:700px){
+  .feature-stage{width:100%;max-width:100%;overflow:hidden}
+  .meal .feature-device,.pantry .feature-device{width:min(210px,68vw);max-width:68vw}
+  .meal .feature-device img,.pantry .feature-device img{width:100%;height:auto;max-height:330px;object-fit:contain;display:block}
+  .meal .demo-prompt,.pantry .demo-prompt{left:4%;right:4%;max-width:92%;min-height:50px;padding:8px 9px 8px 12px;overflow:hidden}
+  .meal .prompt-text,.pantry .prompt-text{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .meal .feature-device,.pantry .feature-device{width:180px;left:50%;right:auto;box-sizing:border-box;transform:translateX(-50%) rotate(-4deg)}
+  .meal.playing .feature-device,.pantry.playing .feature-device{transform:translateX(-50%) rotate(2deg)}
+  .meal .feature-device,.pantry .feature-device{background:transparent;box-shadow:none;border:0;padding:0}
+  .meal .device-label,.pantry .device-label{display:none}
+  .meal .feature-device img,.pantry .feature-device img{border-radius:16px;box-shadow:0 12px 28px #173c2940}
+}
