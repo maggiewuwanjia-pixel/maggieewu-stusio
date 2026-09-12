@@ -6,7 +6,7 @@
 /* Keep the two-column showcase inside the viewport at wide widths. */
 .feature-showcase{overflow:hidden}
 .feature-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:1400px;margin-inline:auto}
-html,body{overflow-x:hidden}
+html,body{overflow-x:clip}
 @media(max-width:700px){
   .feature-stage{width:100%;max-width:100%;overflow:hidden}
   .meal .feature-device,.pantry .feature-device{width:min(210px,68vw);max-width:68vw}
@@ -19,3 +19,9 @@ html,body{overflow-x:hidden}
   .meal .device-label,.pantry .device-label{display:none}
   .meal .feature-device img,.pantry .feature-device img{border-radius:16px;box-shadow:0 12px 28px #173c2940}
 }
+
+/* The source capture includes empty desktop canvas: show only the app area. */
+.plate .phone,.meal .feature-device,.pantry .feature-device{background:transparent;border:0;padding:0;border-radius:0;box-shadow:none;aspect-ratio:215 / 500;height:auto;max-height:none;overflow:hidden}
+.plate .phone-top,.meal .device-label,.pantry .device-label{display:none}
+.plate .phone img,.meal .feature-device img,.pantry .feature-device img{display:block;width:200%;max-width:none;height:auto;max-height:none;border-radius:0;box-shadow:none;object-fit:initial;transform:translateX(-1.6%)}
+@media(max-width:700px){.feature-grid{grid-template-columns:minmax(0,1fr)}}
