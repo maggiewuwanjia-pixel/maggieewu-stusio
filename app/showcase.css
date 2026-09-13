@@ -25,3 +25,23 @@ html,body{overflow-x:clip}
 .plate .phone-top,.meal .device-label,.pantry .device-label{display:none}
 .plate .phone img,.meal .feature-device img,.pantry .feature-device img{display:block;width:200%;max-width:none;height:auto;max-height:none;border-radius:0;box-shadow:none;object-fit:initial;transform:translateX(-1.6%)}
 @media(max-width:700px){.feature-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* Continuous depth and paper-edge feedback, including keyboard focus. */
+.feature-stage{transform:perspective(1400px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .32s cubic-bezier(.2,.7,.2,1),box-shadow .5s;contain:layout paint}
+.feature-stage::before{content:'';position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at var(--mx,50%) var(--my,50%),#ffffff38,transparent 60%);opacity:0;transition:opacity .5s}
+.feature-stage::after{content:'';position:absolute;right:0;bottom:0;width:64px;height:64px;z-index:6;pointer-events:none;background:linear-gradient(135deg,transparent 48%,#182e2440 49%,#fafdec 52%,#d2dec0 72%,#809477 100%);clip-path:polygon(100% 0,100% 100%,0 100%);transform:translate(64px,64px);transform-origin:100% 100%;transition:transform .65s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(-5px -5px 8px #172d2440)}
+.feature-stage:is(:hover,:focus-within){box-shadow:0 22px 45px -25px #173c2970}
+.feature-stage:is(:hover,:focus-within)::before{opacity:1}
+.feature-stage:is(:hover,:focus-within)::after{transform:translate(0,0)}
+.feature-device{transition:transform .8s cubic-bezier(.16,1,.3,1),box-shadow .8s}
+.feature-stage:is(:hover,:focus-within) .feature-device{translate:0 -9px}
+.feature-device{transition:translate .8s cubic-bezier(.16,1,.3,1),transform .8s,box-shadow .8s}
+.demo-prompt{transition:translate .65s cubic-bezier(.16,1,.3,1),box-shadow .65s}
+.feature-stage:is(:hover,:focus-within) .demo-prompt{translate:0 -4px;box-shadow:0 12px 35px #16392150}
+.demo-send{transition:transform .35s,background .35s;flex-shrink:0}
+.demo-prompt:hover .demo-send{transform:rotate(45deg);background:#355c31}
+.board button{transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .35s,box-shadow .4s}
+.board button:hover{box-shadow:0 20px 40px #071a1b70;z-index:2}
+.board button img{transition:filter .5s;filter:saturate(.82)}
+.board button:hover img{filter:saturate(1)}
+@media(prefers-reduced-motion:reduce){.feature-stage,.board button{transform:none!important}.feature-device,.demo-prompt{translate:none!important}.feature-stage::after{display:none}}

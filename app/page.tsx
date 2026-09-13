@@ -1,6 +1,7 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
-import {Portal,FeatureShowcase} from './showcase';
+import {FeatureShowcase} from './showcase';
+import {MotionPortal as Portal} from './motion-portal';
 const B='/portfolio/';
 const nav=[['northstar','NorthStar','AI CONTENT COPILOT'],['plateforge','PlateForge','AI FOOD COMPANION'],['architecture','空间与叙事','ARCHITECTURE / 4 WORKS'],['about','关于宛珈','ABOUT & EXPERIENCE'],['nivea','NIVEA','BRAND & GROWTH']];
 const works=[
