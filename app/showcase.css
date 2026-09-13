@@ -45,3 +45,25 @@ html,body{overflow-x:clip}
 .board button img{transition:filter .5s;filter:saturate(.82)}
 .board button:hover img{filter:saturate(1)}
 @media(prefers-reduced-motion:reduce){.feature-stage,.board button{transform:none!important}.feature-device,.demo-prompt{translate:none!important}.feature-stage::after{display:none}}
+
+/* Real NorthStar recordings and four distinct PlateForge flows. */
+.knowledge .feature-device,.schedule .feature-device{inset:12% 8% auto;padding:9px;transform:rotate(-2deg);background:#f8faef}
+.schedule .feature-device{transform:rotate(2deg)}
+.knowledge .feature-device video,.schedule .feature-device video{display:block;width:100%;aspect-ratio:5/3;object-fit:cover;object-position:top;border-radius:7px;background:#edf1e7}
+.knowledge .demo-prompt,.schedule .demo-prompt{top:55%}
+.knowledge.playing .feature-device,.schedule.playing .feature-device{transform:rotate(0) scale(1.045)}
+.plateforge-features .feature-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:60px 28px}
+.plateforge-features .feature-card:nth-child(2){margin-top:75px}
+.plateforge-features .feature-card:nth-child(3){margin-top:-15px}
+.plateforge-features .feature-card:nth-child(4){margin-top:60px}
+.calories .feature-device,.choice .feature-device,.fridge .feature-device,.cooking .feature-device{width:230px;height:350px;left:50%;right:auto;top:6%;padding:0;border:0;border-radius:18px;transform:translateX(-50%) rotate(-4deg);overflow:hidden;background:#f8f6ef}
+.choice .feature-device,.cooking .feature-device{transform:translateX(-50%) rotate(4deg)}
+.calories .device-label,.choice .device-label,.fridge .device-label,.cooking .device-label{display:none}
+.calories .feature-device img,.choice .feature-device img,.fridge .feature-device img,.cooking .feature-device img{display:block;width:100%;height:auto;min-height:100%;object-fit:cover;object-position:top;border-radius:0;transform:translateY(0);transition:transform 2.2s cubic-bezier(.2,.7,.2,1)}
+.calories.playing .feature-device,.choice.playing .feature-device,.fridge.playing .feature-device,.cooking.playing .feature-device{transform:translateX(-50%) rotate(0) scale(1.04)}
+.calories.playing .feature-device img{transform:translateY(-18%)}
+.choice.playing .feature-device img{transform:translateY(-8%)}
+.fridge.playing .feature-device img{transform:translateY(-22%)}
+.cooking.playing .feature-device img{transform:translateY(-10%)}
+.calories .demo-prompt,.choice .demo-prompt,.fridge .demo-prompt,.cooking .demo-prompt{top:50%}
+@media(max-width:700px){.plateforge-features .feature-grid{grid-template-columns:minmax(0,1fr)}.plateforge-features .feature-card:nth-child(n){margin-top:0}.knowledge .feature-device,.schedule .feature-device{inset:14% 6% auto}.knowledge .demo-prompt,.schedule .demo-prompt{top:50%}}
